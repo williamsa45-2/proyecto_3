@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Usuarios - Offline First</title>
+
+  <!-- PWA: manifest y color de tema -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="stylesheet" href="estilos.css" />
+
+  <!--
+    Import Map: le dice al navegador dónde resolver los imports "bare"
+    (@capacitor/core, etc.) que usa app.js. El navegador NO sabe buscar
+    en node_modules como Node.js; sin esto, `import { Capacitor } from
+    '@capacitor/core'` falla con "Relative references must start with...".
+    Las versiones deben coincidir con las de package.json.
+    Debe declararse ANTES de cualquier <script type="module"> que las use.
+  -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@capacitor/core": "https://esm.sh/@capacitor/core@6.2.1",
+      "@capacitor-community/sqlite": "https://esm.sh/@capacitor-community/sqlite@6.0.2",
+      "@capacitor/network": "https://esm.sh/@capacitor/network@6.0.4"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <header class="encabezado">
+    <h1>Registro de Usuarios</h1>
+    <span id="estadoConexion" class="badge">Verificando conexión...</span>
+  </header>
+
+  <main class="contenedor">
+    <form id="formUsuario" class="formulario">
+      <label>Cédula (cc) *
+        <input type="text" name="cc" id="cc" required />
+      </label>
+
+      <label>Nombre *
+        <input type="text" name="nombre" id="nombre" required />
+      </label>
+
+      <label>Apellido *
+        <input type="text" name="apellido" id="apellido" required />
+      </label>
+
+      <label>Contacto (teléfono)
+        <input type="tel" name="contacto" id="contacto" />
+      </label>
+
+      <label>Correo
+        <input type="email" name="correo" id="correo" />
+      </label>
+
+      <label>Dirección
+        <input type="text" name="direccion" id="direccion" />
+      </label>
+
+      <label>Fecha de nacimiento
+        <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" />
+      </label>
+
+      <label>Profesión
+        <input type="text" name="profesion" id="profesion" />
+      </label>
+
+      <button type="submit">Guardar usuario</button>
+    </form>
+
+    <section>
+      <h2>Registros locales</h2>
+      <table id="tablaUsuarios">
+        <thead>
+          <tr>
+            <th>CC</th><th>Nombre</th><th>Apellido</th><th>Contacto</th>
+            <th>Correo</th><th>Sincronizado</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!--
+    Componente Web Assembly de SQLite, requerido SOLO cuando la app
+    corre en el navegador (modo PWA). En el APK nativo este tag no
+    hace nada porque se usa el motor nativo de SQLite del dispositivo.
+    Ver README para más detalle.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/jeep-sqlite@2.8.0/dist/jeep-sqlite/jeep-sqlite.esm.js" type="module"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/jeep-sqlite@2.8.0/dist/jeep-sqlite/jeep-sqlite.js"></script>
+  <!--
+    wasmPath apunta a una carpeta VERSIONADA (wasm-v1) a propósito:
+    si en el futuro se reemplaza el .wasm, se sube a wasm-v2, wasm-v3, etc.
+    Así la URL cambia y es IMPOSIBLE que el navegador sirva una copia
+    vieja desde caché HTTP con el mismo nombre de archivo.
+  -->
+  <jeep-sqlite wasmPath="/assets/wasm-v1"></jeep-sqlite>
+
+  <!-- Lógica offline-first -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

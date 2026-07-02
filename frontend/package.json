@@ -1,0 +1,23 @@
+{
+  "name": "usuarios-offline-first-client",
+  "version": "1.0.0",
+  "description": "Cliente Capacitor (PWA + APK) para el sistema de usuarios Offline-First",
+  "scripts": {
+    "cap:add:android": "npx cap add android",
+    "cap:sync": "npx cap sync",
+    "cap:open:android": "npx cap open android",
+    "copy:sql-wasm": "node -e \"require('fs').copyFileSync('node_modules/sql.js/dist/sql-wasm.wasm', 'www/assets/wasm-v1/sql-wasm.wasm')\"",
+    "postinstall": "npm run copy:sql-wasm"
+  },
+  "dependencies": {
+    "@capacitor-community/sqlite": "^6.0.2",
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/network": "^6.0.2",
+    "jeep-sqlite": "2.8.0",
+    "sql.js": "1.11.0"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2"
+  }
+}

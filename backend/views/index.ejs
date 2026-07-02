@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= titulo %></title>
+
+  <!-- PWA: manifest y color de tema -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="stylesheet" href="/estilos.css" />
+</head>
+<body>
+
+  <header class="encabezado">
+    <h1>Registro de Usuarios</h1>
+    <span id="estadoConexion" class="badge">Verificando conexión...</span>
+  </header>
+
+  <main class="contenedor">
+    <form id="formUsuario" class="formulario">
+      <label>Cédula (cc) *
+        <input type="text" name="cc" id="cc" required />
+      </label>
+
+      <label>Nombre *
+        <input type="text" name="nombre" id="nombre" required />
+      </label>
+
+      <label>Apellido *
+        <input type="text" name="apellido" id="apellido" required />
+      </label>
+
+      <label>Contacto (teléfono)
+        <input type="tel" name="contacto" id="contacto" />
+      </label>
+
+      <label>Correo
+        <input type="email" name="correo" id="correo" />
+      </label>
+
+      <label>Dirección
+        <input type="text" name="direccion" id="direccion" />
+      </label>
+
+      <label>Fecha de nacimiento
+        <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" />
+      </label>
+
+      <label>Profesión
+        <input type="text" name="profesion" id="profesion" />
+      </label>
+
+      <button type="submit">Guardar usuario</button>
+    </form>
+
+    <section>
+      <h2>Registros locales</h2>
+      <table id="tablaUsuarios">
+        <thead>
+          <tr>
+            <th>CC</th><th>Nombre</th><th>Apellido</th><th>Contacto</th>
+            <th>Correo</th><th>Sincronizado</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!--
+    Componente Web Assembly de SQLite, requerido SOLO cuando la app
+    corre en el navegador (modo PWA). En el APK nativo este tag no
+    hace nada porque se usa el motor nativo de SQLite del dispositivo.
+    Ver sección "Instrucciones PWA" para más detalle.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/jeep-sqlite@latest/dist/jeep-sqlite/jeep-sqlite.esm.js" type="module"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/jeep-sqlite@latest/dist/jeep-sqlite/jeep-sqlite.js"></script>
+  <jeep-sqlite></jeep-sqlite>
+
+  <!-- Nuestra lógica offline-first -->
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

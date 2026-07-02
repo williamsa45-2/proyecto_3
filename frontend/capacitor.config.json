@@ -1,0 +1,15 @@
+{
+  "appId": "com.miempresa.usuariosoffline",
+  "appName": "Registro de Usuarios",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "CapacitorSQLite": {
+      "iosDatabaseLocation": "Library/CapacitorDatabase",
+      "iosIsEncryption": false,
+      "androidIsEncryption": false
+    }
+  }
+}
